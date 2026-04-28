@@ -51,21 +51,18 @@ jobs:
         run: uv sync --extra dev
 
       - name: Run eval suite
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          INCIDENTOPS_LIVE: 1
         run: uv run python -m incidentops.evals.run_evals
 
       - name: Post eval summary
         if: always()
-        run: python ops/pr_comment.py eval-results.json >> $GITHUB_STEP_SUMMARY
+        run: uv run python ops/pr_comment.py eval-results.json >> $GITHUB_STEP_SUMMARY
 
       - name: Post PR comment
         if: always() && github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          python ops/pr_comment.py eval-results.json | \
+          uv run python ops/pr_comment.py eval-results.json | \
             gh pr comment ${{ github.event.pull_request.number }} \
               --repo ${{ github.repository }} \
               --body-file -
@@ -87,20 +84,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-          cache-dependency-path: incidentops/dashboard/pnpm-lock.yaml
+          cache: npm
+          cache-dependency-path: incidentops/dashboard/package-lock.json
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
 
       - name: Build
-        run: pnpm build
+        run: npm run build
