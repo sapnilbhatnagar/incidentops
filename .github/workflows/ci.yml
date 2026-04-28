@@ -51,6 +51,9 @@ jobs:
         run: uv sync --extra dev
 
       - name: Run eval suite
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          INCIDENTOPS_LIVE: 1
         run: uv run python -m incidentops.evals.run_evals
 
       - name: Post eval summary
