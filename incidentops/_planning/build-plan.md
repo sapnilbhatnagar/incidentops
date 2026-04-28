@@ -96,11 +96,11 @@ Target: 15 runbooks, 80 tickets, 8 incidents, extended telemetry, 30 gold-labell
 
 | ID | Module | Description | Status |
 |---|---|---|---|
-| AGENT-001 | Corpus chunker | Chunk runbooks + incidents + tickets at ~500 tokens, 50-token overlap | [ ] |
-| AGENT-002 | LanceDB indexer | Dense embedding index over chunks | [ ] |
-| AGENT-003 | BM25 index | Sparse keyword index alongside dense | [ ] |
-| AGENT-004 | Cross-encoder reranker | Rerank fused results, return top-K with source_id + span | [ ] |
-| AGENT-005 | `retrieve()` API | Public interface: `retrieve(query, top_k) -> List[Chunk]` | [ ] |
+| AGENT-001 | Corpus chunker | Chunk runbooks + incidents + tickets at ~500 tokens, 50-token overlap | [x] |
+| AGENT-002 | LanceDB indexer | Dense embedding index over chunks | [x] |
+| AGENT-003 | BM25 index | Sparse keyword index alongside dense | [x] |
+| AGENT-004 | Cross-encoder reranker | Rerank fused results, return top-K with source_id + span | [x] |
+| AGENT-005 | `retrieve()` API | Public interface: `retrieve(query, top_k) -> List[Chunk]` | [x] |
 | EVAL-011 | Retrieval eval | recall@5 ≥ 0.85 on 30-incident gold set | [ ] |
 
 ---
