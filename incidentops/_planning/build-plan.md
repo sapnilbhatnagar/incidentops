@@ -124,13 +124,13 @@ Target: 15 runbooks, 80 tickets, 8 incidents, extended telemetry, 30 gold-labell
 
 | ID | Module | Description | Status |
 |---|---|---|---|
-| TOOL-001 | `get_runbook(id)` | Returns runbook content by ID from corpus | [ ] |
-| TOOL-002 | `search_tickets(query)` | Keyword + semantic search over tickets.jsonl | [ ] |
-| TOOL-003 | `get_telemetry(tenant_id, window)` | Returns request + log records for a tenant | [ ] |
-| TOOL-004 | `get_incident(id)` | Returns postmortem by ID | [ ] |
-| TOOL-005 | `lookup_issue_code(code)` | Returns issue code definition from saas-issue-codes.json | [ ] |
-| TOOL-006 | Tool registry | Pydantic-validated schemas; registry snapshot test | [ ] |
-| EVAL-013 | Harmless tool invariant | Registry = exactly TOOL-001 through TOOL-005; 0 unregistered calls | [ ] |
+| TOOL-001 | `get_runbook(id)` | Returns runbook content by ID from corpus | [x] |
+| TOOL-002 | `search_tickets(query)` | Keyword + semantic search over tickets.jsonl | [x] |
+| TOOL-003 | `get_telemetry(tenant_id, window)` | Returns request + log records for a tenant | [x] |
+| TOOL-004 | `get_incident(id)` | Returns postmortem by ID | [x] |
+| TOOL-005 | `lookup_issue_code(code)` | Returns issue code definition from saas-issue-codes.json | [x] |
+| TOOL-006 | Tool registry | Pydantic-validated schemas; registry snapshot test | [x] |
+| EVAL-013 | Harmless tool invariant | Registry = exactly TOOL-001 through TOOL-005; 0 unregistered calls | [x] |
 
 ---
 
