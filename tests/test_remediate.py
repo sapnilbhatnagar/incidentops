@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from unittest.mock import MagicMock, patch
+import os
 
 from incidentops.agent.chunker import Chunk
 from incidentops.agent.handoff import handoff
@@ -41,6 +42,7 @@ def _mock_remediation_response(raw: dict):
     return response
 
 
+@patch.dict(os.environ, {"ANTHROPIC_API_KEY": "test-key"})
 @patch("incidentops.agent.remediate.anthropic.Anthropic")
 def test_remediate_returns_draft(mock_cls):
     mock_cls.return_value.messages.create.return_value = _mock_remediation_response({
@@ -63,6 +65,7 @@ def test_remediate_abstaining_diagnosis_returns_escalation_draft(mock_cls):
     mock_cls.assert_not_called()
 
 
+@patch.dict(os.environ, {"ANTHROPIC_API_KEY": "test-key"})
 @patch("incidentops.agent.remediate.anthropic.Anthropic")
 def test_remediate_null_rollback_becomes_none(mock_cls):
     mock_cls.return_value.messages.create.return_value = _mock_remediation_response({

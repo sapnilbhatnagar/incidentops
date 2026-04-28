@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from unittest.mock import MagicMock, patch
+import os
 
 import pytest
 
@@ -125,6 +126,7 @@ def _mock_response(tool_input: dict):
     return response
 
 
+@patch.dict("os.environ", {"ANTHROPIC_API_KEY": "test-key"})
 @patch("incidentops.agent.diagnose.anthropic.Anthropic")
 def test_diagnose_returns_diagnosis_object(mock_client_cls):
     mock_client_cls.return_value.messages.create.return_value = _mock_response({
@@ -141,6 +143,7 @@ def test_diagnose_returns_diagnosis_object(mock_client_cls):
     assert result.abstain_reason is None
 
 
+@patch.dict(os.environ, {"ANTHROPIC_API_KEY": "test-key"})
 @patch("incidentops.agent.diagnose.anthropic.Anthropic")
 def test_diagnose_abstains_on_empty_chunks(mock_client_cls):
     mock_client_cls.return_value.messages.create.return_value = _mock_response({
@@ -154,6 +157,7 @@ def test_diagnose_abstains_on_empty_chunks(mock_client_cls):
     assert result.abstain_reason is not None
 
 
+@patch.dict(os.environ, {"ANTHROPIC_API_KEY": "test-key"})
 @patch("incidentops.agent.diagnose.anthropic.Anthropic")
 def test_diagnose_validates_schema(mock_client_cls):
     """Output must pass Pydantic validation — model_validate should not raise."""

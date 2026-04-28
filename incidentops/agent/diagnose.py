@@ -108,7 +108,17 @@ def _parse_tool_output(raw: dict) -> Diagnosis:
 
 def diagnose(ticket: dict, chunks: list[Chunk]) -> Diagnosis:
     """Call Opus to produce a Diagnosis from a ticket and retrieved evidence."""
-    client = anthropic.Anthropic()
+    import os
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        return Diagnosis(
+            root_cause_hypothesis="",
+            confidence="low",
+            evidence_spans=[],
+            next_action="",
+            abstain_reason="ANTHROPIC_API_KEY not set — set env var or use stub mode",
+        )
+    client = anthropic.Anthropic(api_key=api_key)
     user_msg = _format_user_message(ticket, chunks)
 
     response = client.messages.create(

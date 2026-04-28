@@ -77,7 +77,17 @@ def remediate(diagnosis: Diagnosis, ticket: dict) -> RemediationDraft:
             required_human_approver="Senior support engineer",
         )
 
-    client = anthropic.Anthropic()
+    import os
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        return RemediationDraft(
+            steps=["ANTHROPIC_API_KEY not set — set env var to generate remediation."],
+            expected_effect="",
+            rollback_note=None,
+            required_human_approver=None,
+        )
+
+    client = anthropic.Anthropic(api_key=api_key)
     response = client.messages.create(
         model=_MODEL,
         max_tokens=1024,
